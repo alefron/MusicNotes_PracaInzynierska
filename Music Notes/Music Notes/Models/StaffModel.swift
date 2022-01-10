@@ -63,7 +63,7 @@ class StaffModel {
             }
             currentIndex += 2
         }
-        fields.append(StaffField(upperBound: lastLineHeight, lowerBound: size.height, index: currentIndex))
+        fields.append(StaffField(upperBound: lastLineHeight, lowerBound: size.height, index: currentIndex - 1))
         
         self.whole = Note(type: .whole, fields: fields, id: 0)
         self.half = Note(type: .half, fields: fields, id: 1)

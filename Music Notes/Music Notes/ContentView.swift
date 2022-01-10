@@ -9,6 +9,7 @@ import SwiftUI
 import PencilKit
 import CoreML
 import Vision
+import AudioToolbox
 
 struct ContentView: View {
     let step: CGFloat = 20
@@ -19,8 +20,10 @@ struct ContentView: View {
     @State private var staffMachineWriting = PKCanvasView()
     @State var lastPrediction: String = " "
     @State var lastPredictionImage = UIImage()
+    @State var lastPredictionImage2 = UIImage()
     @State var lastPredictionNote: Note = Note(id: 0)
     @State var notesCount: Int = 0
+    @State var musicSequence: MusicSequence?
     var staffModel: StaffModel {
         return StaffModel(step: step, linesAdded: linesAdded, size: staffSize)
     }
@@ -52,6 +55,12 @@ struct ContentView: View {
                 
                 HStack {
                     Button {
+                        self.exportMidiFile()
+                    } label: {
+                        Text("click me")
+                    }
+
+                    Button {
                         self.onConvertClicked()
                         self.cleanStaff()
                     } label: {
@@ -81,7 +90,7 @@ struct ContentView: View {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: true) {
                                 ScrollViewReader { value in
-                                    LazyHStack {
+                                    LazyHStack (spacing: 0) {
                                         ForEach (notesOnStaff, id: \.self) { note in
                                                 Image(note.name!)
                                                     .resizable()
@@ -98,7 +107,6 @@ struct ContentView: View {
                                 }
                             }
                         }.frame(width: staffSize.width, height: staffSize.height)
-                        
                     }
                 }
             }
@@ -109,25 +117,75 @@ struct ContentView: View {
         UITraitCollection(userInterfaceStyle: .light).performAsCurrent {
             var imageGetherer = ImageGetherer(handwritingArea: self.staffHandWriting)
             let capturedDrawing = staffHandWriting.drawing
-            var image = capturedDrawing.image(from: capturedDrawing.bounds, scale: 3.0)
+            let image = capturedDrawing
+                .image(from: capturedDrawing.bounds,
+                       scale: 3.0)
             
-            image = imageGetherer.processOneNoteImage(note: image)
+            let imageMaximized = imageGetherer.scaleAndRender(image: image)
+
+            let separator = NotesSeparator(entireImage: imageMaximized, entireImageXOffset: capturedDrawing.bounds.minX, entireImageYOffset: capturedDrawing.bounds.minY)
+            separator.separateNotesIteratively()
             
-            self.lastPredictionImage = image
-            
-            self.getPredictionOnNote(note: image)
-            
-            let imageToCalculateHeight = imageGetherer.getImageToCalculateHeight(drawingOneNote: capturedDrawing, staffSize: self.staffSize)
-            
-            self.lastPredictionImage = imageToCalculateHeight
-            var maxFilledFieldIndex = 0
-            if (heightCalculator.isHeightMatters(predictedClassName: self.lastPrediction)) {
-                maxFilledFieldIndex = self.heightCalculator.calculateHeight_TheBigestOfThreeFromBottom(imageOneNote: imageToCalculateHeight)
+            var wasSharpBemolNatural = false
+        for_loop: for i in 0..<separator.separatedNotesWithPosition.count {
+                var imageProcessed = imageGetherer.processOneNoteImage(note: separator.separatedNotesWithPosition[i].image)
+                self.getPredictionOnNote(note: imageProcessed)
+                
+                var maxFilledFieldIndex = 2
+                if (heightCalculator.isHeightMatters(predictedClassName: self.lastPrediction)) {
+                    let imageToCalculateHeight = imageGetherer.getImageToCalculateHeight(uiImageWithPosition: separator.separatedNotesWithPosition[i], staffSize: staffSize)
+                    maxFilledFieldIndex = self.heightCalculator.calculateHeight_TheBigestOfThreeFromBottom(imageOneNote: imageToCalculateHeight)
+                } else if (lastPrediction == "dot") {
+                    maxFilledFieldIndex = notesOnStaff.last?.fieldNumber ?? -1
+                    if (maxFilledFieldIndex == -1) {
+                        continue for_loop
+                    }
+                } else if (heightCalculator.isRest(predictedClassName: lastPrediction)) {
+                    maxFilledFieldIndex = 1
+                }
+                    
+                if (wasSharpBemolNatural) {
+                    notesOnStaff.last!.fieldNumber = maxFilledFieldIndex
+                    wasSharpBemolNatural = false
+                }
+                self.notesOnStaff.append(Note(type: SignsTypes(rawValue: self.lastPrediction)!, fields: staffModel.fields, fieldNumber: maxFilledFieldIndex, id: self.notesCount))
+                notesCount += 1
+                maxFilledFieldIndex = 2
+                if (["sharp", "natural", "bemol"].contains(lastPrediction)) {
+                    wasSharpBemolNatural = true
+                }
             }
-            
-            self.notesOnStaff.append(Note(type: SignsTypes(rawValue: self.lastPrediction)!, fields: staffModel.fields, fieldNumber: maxFilledFieldIndex, id: self.notesCount))
-            notesCount += 1
         }
+    }
+    
+    func exportMidiFile() {
+        var status = NewMusicSequence(&musicSequence)
+        if status != OSStatus(noErr) {
+            print("\(#line) bad status \(status) creating sequence")
+        }
+        
+        var track: MusicTrack?
+        status = MusicSequenceNewTrack(musicSequence!, &track)
+        if status != OSStatus(noErr) {
+            print("\(#line) bad status \(status) creating track")
+        }
+        
+        var time = MusicTimeStamp(1.0)
+        for index:UInt8 in 60...72 {
+            var note = MIDINoteMessage(channel: 0,
+                                       note: index,
+                                       velocity: 64,
+                                       releaseVelocity: 0,
+                                       duration: 1.0 )
+            MusicTrackNewMIDINoteEvent(track!, time, &note)
+            time += 1
+        }
+        
+        var musicPlayer: MusicPlayer?
+        var player = NewMusicPlayer(&musicPlayer)
+
+        player = MusicPlayerSetSequence(musicPlayer!, musicSequence)
+        player = MusicPlayerStart(musicPlayer!)
     }
     
     func getPredictionOnNote(note: UIImage) {

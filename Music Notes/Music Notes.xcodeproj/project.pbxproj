@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BD7B306527616524006B8274 /* ImageGetherer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306427616524006B8274 /* ImageGetherer.swift */; };
 		BD7B306927616EEB006B8274 /* MusicNotesPredictor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */; };
+		BD97F7262789162A006167AF /* NotesSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD97F7252789162A006167AF /* NotesSeparator.swift */; };
 		BD98252427852F44001499C3 /* StaffModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD98252327852F44001499C3 /* StaffModel.swift */; };
 		BD98252627865873001499C3 /* SizePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD98252527865873001499C3 /* SizePreferences.swift */; };
 		BD98252827868D00001499C3 /* HeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD98252727868D00001499C3 /* HeightCalculator.swift */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		BD7B306427616524006B8274 /* ImageGetherer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageGetherer.swift; path = Controllers/ImageGetherer.swift; sourceTree = "<group>"; };
 		BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MusicNotesPredictor.mlmodel; sourceTree = "<group>"; };
+		BD97F7252789162A006167AF /* NotesSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotesSeparator.swift; path = Controllers/NotesSeparator.swift; sourceTree = "<group>"; };
 		BD98252327852F44001499C3 /* StaffModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StaffModel.swift; path = Models/StaffModel.swift; sourceTree = "<group>"; };
 		BD98252527865873001499C3 /* SizePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SizePreferences.swift; path = Controllers/SizePreferences.swift; sourceTree = "<group>"; };
 		BD98252727868D00001499C3 /* HeightCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeightCalculator.swift; path = Controllers/HeightCalculator.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				BD98252527865873001499C3 /* SizePreferences.swift */,
 				BD98252727868D00001499C3 /* HeightCalculator.swift */,
 				BD98252B2786C96C001499C3 /* NotesModels.swift */,
+				BD97F7252789162A006167AF /* NotesSeparator.swift */,
 			);
 			path = "Music Notes";
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD97F7262789162A006167AF /* NotesSeparator.swift in Sources */,
 				BDA1FDCD2748510800AC8970 /* ContentView.swift in Sources */,
 				BDA1FDDB27487A5F00AC8970 /* StaffView.swift in Sources */,
 				BD98252827868D00001499C3 /* HeightCalculator.swift in Sources */,

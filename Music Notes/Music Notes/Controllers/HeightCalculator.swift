@@ -48,6 +48,14 @@ class HeightCalculator {
         }
     }
     
+    func isRest(predictedClassName: String) -> Bool {
+        if (["restWhole", "restHalf", "restQuarter", "restEight", "restSixteenth"]
+                .contains(predictedClassName)) {
+            return true
+        }
+        return false
+    }
+    
     func calculateHeight_TheMostFilledField(imageOneNote: UIImage) -> Int {
         //for each of staff fields
         var currentMaxFilledFieldValue = 0
@@ -164,7 +172,7 @@ class HeightCalculator {
             var transparentPixelsCount = 0
             var colorPixelsCount = 0
             while (ind < pixels!.count) {
-                if (pixels![ind] == 0) {
+                if (pixels![ind] == 255) {
                     transparentPixelsCount += 1
                 } else {
                     colorPixelsCount += 1
@@ -178,8 +186,8 @@ class HeightCalculator {
                 maxFilledFieldIndex = 2
                 break
             }
-            if (firstFromBottomFound && staffModel.fields[i].index == 2 * staffModel.linesCount && Float(percentOfColor) < Float(minFilledSecondFound)) {
-                maxFilledFieldIndex = staffModel.fields[i].index
+            if (staffModel.fields[i].index == 2 * staffModel.linesCount + 1 && Float(percentOfColor) > Float(3)) {
+                maxFilledFieldIndex = staffModel.fields[i].index - 1
                 break
             }
             
@@ -219,7 +227,7 @@ class HeightCalculator {
         //crop image - get only one field part
         let croppedCGImage = sourceCGImage.cropping(
             to: CGRect(origin: CGPoint(x: 0, y: field.upperBound),
-                       size: CGSize(width: sourceCGImage.width, height: Int(step)))
+                       size: CGSize(width: sourceCGImage.width, height: Int(field.lowerBound)))
         )
         //convert back to UIImage
         return UIImage(
@@ -245,9 +253,68 @@ extension UIImage {
                                 bytesPerRow: 4 * Int(size.width),
                                 space: colorSpace,
                                 bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        context!.setFillColor(UIColor.white.cgColor);
+        context!.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
         guard let cgImage = self.cgImage else { return nil }
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 
         return pixelData
     }
+    
+    func pixel2DData() -> [[PixelRGBA]]? {
+        let size = self.size
+        let dataSize = size.width * size.height * 4
+        var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        var context = CGContext(data: &pixelData,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: 4 * Int(size.width),
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        guard let cgImage = self.cgImage else { return nil }
+        context!.setFillColor(UIColor.white.cgColor);
+        context!.fill(CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        
+        var i = 0
+        var j = 0
+        var outArray = Array(repeating: Array(repeating: PixelRGBA(), count: Int(size.width)), count: Int(size.height))
+        while (i < Int(size.height)) {
+            while (j < Int(size.width)) {
+                outArray[i][j] = PixelRGBA(alpha: 255,
+                                           red: pixelData[i*Int(size.width)*4 + j*4],
+                                           green: pixelData[i*Int(size.width)*4 + 4*j + 1],
+                                           blue: pixelData[i*Int(size.width)*4 + 4*j + 2])
+                
+                j += 1
+            }
+            i += 1
+            j = 0
+        }
+        
+        return outArray
+    }
+    
+    convenience init?(pixels: [PixelRGBA], width: Int, height: Int) {
+            guard width > 0 && height > 0, pixels.count == width * height else { return nil }
+            var data = pixels
+            guard let providerRef = CGDataProvider(data: Data(bytes: &data, count: data.count * MemoryLayout<PixelRGBA>.size) as CFData)
+                else { return nil }
+            guard let cgim = CGImage(
+                width: width,
+                height: height,
+                bitsPerComponent: 8,
+                bitsPerPixel: 32,
+                bytesPerRow: width * MemoryLayout<PixelRGBA>.size,
+                space: CGColorSpaceCreateDeviceRGB(),
+                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue),
+                provider: providerRef,
+                decode: nil,
+                shouldInterpolate: true,
+                intent: .defaultIntent)
+            else { return nil }
+            self.init(cgImage: cgim)
+        }
  }

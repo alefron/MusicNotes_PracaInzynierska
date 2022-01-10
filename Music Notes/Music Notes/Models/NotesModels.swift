@@ -132,13 +132,13 @@ struct NotesOffset {
                                             "quarter":0,
                                             "eight":0,
                                             "sixteenth":0,
-                                            "restWhole":0,
-                                            "restHalf":0,
-                                            "restQuarter":0,
-                                            "restEight":0,
-                                            "restSixteenth":0,
-                                            "bemol":0,
-                                            "natural":0,
-                                            "sharp":0,
-                                            "dot":0]
+                                            "restWhole":160,
+                                            "restHalf":170,
+                                            "restQuarter":202,
+                                            "restEight":183,
+                                            "restSixteenth":183,
+                                            "bemol":4,
+                                            "natural":5,
+                                            "sharp":6,
+                                            "dot":-2]
 }
