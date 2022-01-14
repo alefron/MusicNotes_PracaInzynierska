@@ -30,6 +30,57 @@ class StaffModel {
     public var dot: Note
     public var notesOnStaff: [Note] = []
     
+    init() {
+        step = 20
+        linesCount = 9
+        size = CGSize (width: 1080, height: 300)
+        
+        let firstLineHeight = size.height/2 - CGFloat((linesCount - 1)/2) * step
+        let lastLineHeight = size.height/2 + CGFloat((linesCount - 1)/2) * step
+        
+        fields.append(StaffField(upperBound: 0, lowerBound: firstLineHeight, index: 1))
+        
+        //first set to first line height
+        var currentLineHeight = firstLineHeight
+        //set heights of all of the lines
+        for _ in 1...linesCount {
+            linesHeights.append(currentLineHeight)
+            currentLineHeight += 20
+        }
+        
+        var currentIndex = 2
+        //set bounds of all of the staff fields
+        for i in 0...linesCount - 1 {
+            let upperBoundOnLine = linesHeights[i] - step/2
+            let lowerBoundOnLine = linesHeights[i] + step/2
+            
+            let upperBoundOnField = linesHeights[i]
+            let lowerBoundOnField = linesHeights[i] + step
+            
+            fields.append(StaffField(upperBound: upperBoundOnLine, lowerBound: lowerBoundOnLine, index: currentIndex))
+            if (i != linesCount - 1) {
+                fields.append(StaffField(upperBound: upperBoundOnField, lowerBound: lowerBoundOnField, index: currentIndex + 1))
+            }
+            currentIndex += 2
+        }
+        fields.append(StaffField(upperBound: lastLineHeight, lowerBound: size.height, index: currentIndex - 1))
+        
+        self.whole = Note()
+        self.half = whole
+        self.quarter = whole
+        self.eight = whole
+        self.sixteenth = whole
+        self.restWhole = whole
+        self.restHalf = whole
+        self.restQuarter = whole
+        self.restEight = whole
+        self.restSixteenth = whole
+        self.dot = whole
+        self.natural = whole
+        self.bemol = whole
+        self.sharp = whole
+    }
+    
     init(step: CGFloat, linesAdded: Int, size: CGSize) {
         self.step = step
         self.linesCount = 5 + linesAdded + linesAdded

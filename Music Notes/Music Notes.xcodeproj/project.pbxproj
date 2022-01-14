@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD245649278F43160015D564 /* MIDIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD245648278F43160015D564 /* MIDIDocument.swift */; };
+		BD26DC0B278D01C70097B8D8 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD26DC0A278D01C70097B8D8 /* OptionsView.swift */; };
+		BD26DC0D278D315E0097B8D8 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD26DC0C278D315E0097B8D8 /* NotesList.swift */; };
 		BD7B306527616524006B8274 /* ImageGetherer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306427616524006B8274 /* ImageGetherer.swift */; };
 		BD7B306927616EEB006B8274 /* MusicNotesPredictor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */; };
 		BD97F7262789162A006167AF /* NotesSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD97F7252789162A006167AF /* NotesSeparator.swift */; };
@@ -23,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD245648278F43160015D564 /* MIDIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MIDIDocument.swift; path = Models/MIDIDocument.swift; sourceTree = "<group>"; };
+		BD26DC0A278D01C70097B8D8 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OptionsView.swift; path = Views/OptionsView.swift; sourceTree = "<group>"; };
+		BD26DC0C278D315E0097B8D8 /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotesList.swift; path = Models/NotesList.swift; sourceTree = "<group>"; };
+		BD567F43278F4FB2008A154A /* MidiParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MidiParser.framework; path = Carthage/Build/iOS/MidiParser.framework; sourceTree = SOURCE_ROOT; };
 		BD7B306427616524006B8274 /* ImageGetherer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageGetherer.swift; path = Controllers/ImageGetherer.swift; sourceTree = "<group>"; };
 		BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MusicNotesPredictor.mlmodel; sourceTree = "<group>"; };
 		BD97F7252789162A006167AF /* NotesSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotesSeparator.swift; path = Controllers/NotesSeparator.swift; sourceTree = "<group>"; };
@@ -69,6 +76,7 @@
 		BDA1FDC92748510800AC8970 /* Music Notes */ = {
 			isa = PBXGroup;
 			children = (
+				BD567F43278F4FB2008A154A /* MidiParser.framework */,
 				BDA1FDD82748561900AC8970 /* CanvasView.swift */,
 				BDA1FDDA27487A5F00AC8970 /* StaffView.swift */,
 				BDA1FDCA2748510800AC8970 /* Music_NotesApp.swift */,
@@ -82,6 +90,9 @@
 				BD98252727868D00001499C3 /* HeightCalculator.swift */,
 				BD98252B2786C96C001499C3 /* NotesModels.swift */,
 				BD97F7252789162A006167AF /* NotesSeparator.swift */,
+				BD26DC0A278D01C70097B8D8 /* OptionsView.swift */,
+				BD26DC0C278D315E0097B8D8 /* NotesList.swift */,
+				BD245648278F43160015D564 /* MIDIDocument.swift */,
 			);
 			path = "Music Notes";
 			sourceTree = "<group>";
@@ -104,6 +115,7 @@
 				BDA1FDC32748510800AC8970 /* Sources */,
 				BDA1FDC42748510800AC8970 /* Frameworks */,
 				BDA1FDC52748510800AC8970 /* Resources */,
+				BD567F46278F7319008A154A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -159,6 +171,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BD567F46278F7319008A154A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/MidiParser.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BDA1FDC32748510800AC8970 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -167,6 +200,7 @@
 				BD97F7262789162A006167AF /* NotesSeparator.swift in Sources */,
 				BDA1FDCD2748510800AC8970 /* ContentView.swift in Sources */,
 				BDA1FDDB27487A5F00AC8970 /* StaffView.swift in Sources */,
+				BD26DC0B278D01C70097B8D8 /* OptionsView.swift in Sources */,
 				BD98252827868D00001499C3 /* HeightCalculator.swift in Sources */,
 				BD7B306527616524006B8274 /* ImageGetherer.swift in Sources */,
 				BDA1FDCB2748510800AC8970 /* Music_NotesApp.swift in Sources */,
@@ -174,6 +208,8 @@
 				BD98252627865873001499C3 /* SizePreferences.swift in Sources */,
 				BD98252427852F44001499C3 /* StaffModel.swift in Sources */,
 				BDA1FDD92748561900AC8970 /* CanvasView.swift in Sources */,
+				BD245649278F43160015D564 /* MIDIDocument.swift in Sources */,
+				BD26DC0D278D315E0097B8D8 /* NotesList.swift in Sources */,
 				BD98252C2786C96C001499C3 /* NotesModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +343,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Music Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = 685JA435L4;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -337,6 +377,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Music Notes/Preview Content\"";
 				DEVELOPMENT_TEAM = 685JA435L4;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

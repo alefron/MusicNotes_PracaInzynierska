@@ -40,22 +40,6 @@ class HeightCalculator {
         }
     }
     
-    func isHeightMatters(predictedClassName: String) -> Bool {
-        if (["whole", "half", "quarter", "eight", "sixteenth"].contains(predictedClassName)) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func isRest(predictedClassName: String) -> Bool {
-        if (["restWhole", "restHalf", "restQuarter", "restEight", "restSixteenth"]
-                .contains(predictedClassName)) {
-            return true
-        }
-        return false
-    }
-    
     func calculateHeight_TheMostFilledField(imageOneNote: UIImage) -> Int {
         //for each of staff fields
         var currentMaxFilledFieldValue = 0
