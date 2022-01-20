@@ -9,18 +9,16 @@ import Foundation
 import PencilKit
 import SwiftUI
 
-struct ImageGetherer {
+class ImageGetherer {
     var handwritingArea: PKCanvasView
     var oneNote: UIImage = UIImage()
     var desirableDimension: CGFloat = 224
-    var notes: [String] = []
     
-    func cutStaff() {
-        //cutting handwritingArea on the notes.
-        //fill the notes array
+    init(handwritingArea: PKCanvasView) {
+        self.handwritingArea = handwritingArea
     }
     
-    mutating func processOneNoteImage(note: UIImage) -> UIImage {
+    func processOneNoteImage(note: UIImage) -> UIImage {
 
         let drawingX = note.size.width
         let drawingY = note.size.height
@@ -50,7 +48,7 @@ struct ImageGetherer {
         return self.oneNote
     }
     
-    mutating func scaleAndRender(image: UIImage) -> UIImage {
+    func scaleAndRender(image: UIImage) -> UIImage {
         let drawingX = image.size.width
         let drawingY = image.size.height
         
@@ -104,18 +102,35 @@ struct ImageGetherer {
         return newImage!
     }
     
-    func getImageToCalculateHeight(uiImageWithPosition: UIImageWithPosition, staffSize: CGSize) -> UIImage {
-        var scaledImage = UIImage(cgImage: uiImageWithPosition.image.cgImage!, scale: 3, orientation: uiImageWithPosition.image.imageOrientation)
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: scaledImage.size.width, height: staffSize.height), false, 1.0)
+    func getImageToCalculateHeight(uiImageWithPosition: UIImageWithPosition,
+                                   staffSize: CGSize) -> UIImage {
+        let scaledImage = UIImage(cgImage: uiImageWithPosition.image.cgImage!,
+                                  scale: 3,
+                                  orientation: uiImageWithPosition
+                                    .image
+                                    .imageOrientation)
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(width: scaledImage.size.width,
+                   height: staffSize.height),
+            false,
+            1.0)
         UIColor.white.set()
         
-        var rectangle = CGRect(origin: .zero, size: CGSize(width: scaledImage.size.width, height: staffSize.height))
+        var rectangle = CGRect(origin: .zero,
+                               size: CGSize(width: scaledImage
+                                                .size
+                                                .width,
+                                            height: staffSize
+                                                .height)
+                                )
         let xPosition = 0
         let yPosition = uiImageWithPosition.offsetY
         rectangle.origin = CGPoint(x: xPosition, y: yPosition)
         
-        
-        UIBezierPath(rect: CGRect(x:0, y: 0, width: scaledImage.size.width, height: staffSize.height)).fill()
+        UIBezierPath(rect: CGRect(x:0, y: 0,
+                                  width: scaledImage.size.width,
+                                  height: staffSize.height))
+                    .fill()
         scaledImage.draw(at: rectangle.origin)
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()

@@ -10,13 +10,13 @@ import UIKit
 import SwiftUI
 
 class NotesSeparator {
-    var entireImage: UIImage
-    var imageWidth: CGFloat
-    var imageHeight: CGFloat
+    let entireImage: UIImage
+    let imageWidth: CGFloat
+    let imageHeight: CGFloat
     
     //entire image place on the staff
-    var entireImageXOffset: CGFloat
-    var entireImageYOffset: CGFloat
+    let entireImageXOffset: CGFloat
+    let entireImageYOffset: CGFloat
     
     //entire image pixels
     var pixelsData: [[PixelRGBA]]

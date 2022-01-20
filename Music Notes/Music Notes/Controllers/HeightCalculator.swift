@@ -135,9 +135,6 @@ class HeightCalculator {
         
         var firstFromBottomValue: Float = 0
         var secondFromBottomValue: Float = 0
-        var thirdFromBottomValue: Float = 0
-        
-        var firstFoundFieldIndex = 0
         
         var maxFilledFieldIndex = 5
         var currentMaxFilled: Float = 0
@@ -163,14 +160,15 @@ class HeightCalculator {
                 }
                 ind += 4
             }
-            
-            let percentOfColor = Float(colorPixelsCount)*100/Float(colorPixelsCount + transparentPixelsCount)
+            let percentOfColor = Float(colorPixelsCount)*100/Float(
+                colorPixelsCount + transparentPixelsCount)
             
             if (!firstFromBottomFound && staffModel.fields[i].index == 2) {
                 maxFilledFieldIndex = 2
                 break
             }
-            if (staffModel.fields[i].index == 2 * staffModel.linesCount + 1 && Float(percentOfColor) > Float(3)) {
+            if (staffModel.fields[i].index == 2 * staffModel.linesCount + 1
+                && Float(percentOfColor) > Float(3)) {
                 maxFilledFieldIndex = staffModel.fields[i].index - 1
                 break
             }
@@ -178,7 +176,6 @@ class HeightCalculator {
             if (percentOfColor != 0 && !firstFromBottomFound) {
                 firstFromBottomFound = true
                 firstFromBottomValue = percentOfColor
-                firstFoundFieldIndex = staffModel.fields[i].index
                 maxFilledFieldIndex = staffModel.fields[i].index
                 currentMaxFilled = percentOfColor
                 continue
@@ -194,8 +191,8 @@ class HeightCalculator {
             }
             if (secondFromBottomFound && !thirdFromBottomFound) {
                 thirdFromBottomFound = true
-                thirdFromBottomValue = percentOfColor
-                if (percentOfColor > currentMaxFilled && Float(secondFromBottomValue/firstFromBottomValue) > 3) {
+                if (percentOfColor > currentMaxFilled &&
+                    Float(secondFromBottomValue/firstFromBottomValue) > 3) {
                     maxFilledFieldIndex = staffModel.fields[i].index
                     currentMaxFilled = percentOfColor
                 }

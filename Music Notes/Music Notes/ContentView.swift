@@ -21,26 +21,12 @@ struct ContentView: View {
     @State private var staffHandWriting = PKCanvasView()
     @State private var staffMachineWriting = PKCanvasView()
     @State var lastPrediction: String = " "
-    @State var lastPredictionImage = UIImage()
-    @State var lastPredictionImage2 = UIImage()
-    @State var lastPredictionNote: Note = Note(id: 0)
-    @State var notesCount: Int = 0
     @State var musicSequence: MusicSequence?
     @State var musicPlayer: MusicPlayer?
     @State var isOptionsPresented = false
     @State var exportFile = false
     @State var midiData = MidiData()
     @State var documentToExport: MIDIDocument?
-    
-    var red = Color(red: 0.6, green: 0, blue: 0.12)
-    var blue = Color(hue: 0.695, saturation: 0.926, brightness: 0.52)
-    var grey = Color(red: 0.60, green: 0.60, blue: 0.60)
-    var white = Color(hue: 1.0, saturation: 0.0, brightness: 1.0)
-    var lightGrey = Color(red: 0.70, green: 0.70, blue: 0.70)
-    var lightRed = Color(red: 0.90, green: 0.70, blue: 0.70)
-    var noteColor = UIColor(hue: 0.721, saturation: 0.834, brightness: 0.53, alpha: 1.0)
-    @State var staffBackground = Color(hue: 1.0, saturation: 0.0, brightness: 1.0)
-    @State var trashBackground = Color(red: 0.60, green: 0.60, blue: 0.60)
     @State var isTrashMode = false
     var staffModel: StaffModel {
         return StaffModel(step: step, linesAdded: linesAdded, size: staffSize)
@@ -51,6 +37,17 @@ struct ContentView: View {
     @State var notesOnStaff: [Note] = []
     @StateObject var selectedNote: Note = Note()
     @State var selectedNoteIdx: Int = -1
+    
+    
+    @State var staffBackground = Color(hue: 1.0, saturation: 0.0, brightness: 1.0)
+    @State var trashBackground = Color(red: 0.60, green: 0.60, blue: 0.60)
+    let red = Color(red: 0.6, green: 0, blue: 0.12)
+    let blue = Color(hue: 0.695, saturation: 0.926, brightness: 0.52)
+    let grey = Color(red: 0.60, green: 0.60, blue: 0.60)
+    let white = Color(hue: 1.0, saturation: 0.0, brightness: 1.0)
+    let lightGrey = Color(red: 0.70, green: 0.70, blue: 0.70)
+    let lightRed = Color(red: 0.90, green: 0.70, blue: 0.70)
+    let noteColor = UIColor(hue: 0.721, saturation: 0.834, brightness: 0.53, alpha: 1.0)
     
     var body: some View {
         ZStack{
@@ -63,7 +60,7 @@ struct ContentView: View {
                             .cornerRadius(20, antialiased: true)
                             .shadow(radius: /*@START_MENU_TOKEN@*/12/*@END_MENU_TOKEN@*/)
                         
-                        //staff
+                        //upper staff
                         StaffView(geometry: geometry, step: step).measureSize {
                             self.staffSize = $0
                         }
@@ -447,7 +444,6 @@ struct ContentView: View {
             }
             
             globalNoteId += 1
-            notesCount += 1
             
             }
         }

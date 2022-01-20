@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		BD245649278F43160015D564 /* MIDIDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD245648278F43160015D564 /* MIDIDocument.swift */; };
 		BD26DC0B278D01C70097B8D8 /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD26DC0A278D01C70097B8D8 /* OptionsView.swift */; };
-		BD26DC0D278D315E0097B8D8 /* NotesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD26DC0C278D315E0097B8D8 /* NotesList.swift */; };
 		BD7B306527616524006B8274 /* ImageGetherer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306427616524006B8274 /* ImageGetherer.swift */; };
 		BD7B306927616EEB006B8274 /* MusicNotesPredictor.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */; };
 		BD97F7262789162A006167AF /* NotesSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD97F7252789162A006167AF /* NotesSeparator.swift */; };
@@ -28,7 +27,6 @@
 /* Begin PBXFileReference section */
 		BD245648278F43160015D564 /* MIDIDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MIDIDocument.swift; path = Models/MIDIDocument.swift; sourceTree = "<group>"; };
 		BD26DC0A278D01C70097B8D8 /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OptionsView.swift; path = Views/OptionsView.swift; sourceTree = "<group>"; };
-		BD26DC0C278D315E0097B8D8 /* NotesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotesList.swift; path = Models/NotesList.swift; sourceTree = "<group>"; };
 		BD567F43278F4FB2008A154A /* MidiParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MidiParser.framework; path = Carthage/Build/iOS/MidiParser.framework; sourceTree = SOURCE_ROOT; };
 		BD7B306427616524006B8274 /* ImageGetherer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageGetherer.swift; path = Controllers/ImageGetherer.swift; sourceTree = "<group>"; };
 		BD7B306827616EEB006B8274 /* MusicNotesPredictor.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MusicNotesPredictor.mlmodel; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 				BD98252B2786C96C001499C3 /* NotesModels.swift */,
 				BD97F7252789162A006167AF /* NotesSeparator.swift */,
 				BD26DC0A278D01C70097B8D8 /* OptionsView.swift */,
-				BD26DC0C278D315E0097B8D8 /* NotesList.swift */,
 				BD245648278F43160015D564 /* MIDIDocument.swift */,
 			);
 			path = "Music Notes";
@@ -209,7 +206,6 @@
 				BD98252427852F44001499C3 /* StaffModel.swift in Sources */,
 				BDA1FDD92748561900AC8970 /* CanvasView.swift in Sources */,
 				BD245649278F43160015D564 /* MIDIDocument.swift in Sources */,
-				BD26DC0D278D315E0097B8D8 /* NotesList.swift in Sources */,
 				BD98252C2786C96C001499C3 /* NotesModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

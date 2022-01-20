@@ -9,6 +9,16 @@ import SwiftUI
 
 struct OptionsView: View {
     @Environment(\.dismiss) var dismiss
+    @State var staffSize = CGSize.zero
+    private var originalStaffModel: StaffModel
+    private var linesAdded: Int
+    private var step: CGFloat
+    var staffModel: StaffModel {
+        return StaffModel(step: step,
+                          linesAdded: linesAdded,
+                          size: staffSize)
+    }
+    @EnvironmentObject var selectedNote: Note
     var notesToChoose: [Note] {
         var notes: [Note] = []
         var id = 0
@@ -47,19 +57,6 @@ struct OptionsView: View {
         }
         return notes
     }
-    @State var staffSize = CGSize.zero
-    //@Binding var selectedNote: Note
-    private var originalStaffModel: StaffModel
-    private var linesAdded: Int
-    private var step: CGFloat
-    
-    var staffModel: StaffModel {
-        return StaffModel(step: step,
-                          linesAdded: linesAdded,
-                          size: staffSize)
-    }
-    
-    @EnvironmentObject var selectedNote: Note
     
     init(originalStaffModel: StaffModel) {
         self.linesAdded = (originalStaffModel.linesCount - 5)/2
